@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Skills from '../components/Skills.astro';
+import TypingAnimation from '../components/TypingAnimation.astro';
+import { profile } from '../data/site';
+---
+
+<BaseLayout title={`Skills — ${profile.name}`} description={`Languages, libraries, and tools used by ${profile.name}.`}>
+  <Skills />
+  <TypingAnimation />
+</BaseLayout>

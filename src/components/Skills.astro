@@ -1,0 +1,28 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Reveal from './Reveal.astro';
+import { skillGroups } from '../data/site';
+---
+
+<section class="pt-28 pb-20 sm:pt-36 sm:pb-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <SectionHeading title="Technical Skills" />
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {skillGroups.map((group, index) => (
+        <Reveal delay={index * 70} class="h-full">
+          <div class="h-full rounded-xl border border-line bg-bg p-5 transition-colors hover:border-accent sm:p-6">
+            <h3 class="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-accent">{group.title}</h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span class="chip rounded-md border border-line bg-surface px-2.5 py-1.5 text-xs text-muted">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

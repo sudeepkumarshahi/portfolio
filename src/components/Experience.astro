@@ -1,0 +1,39 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Reveal from './Reveal.astro';
+import { experience } from '../data/site';
+---
+
+<section class="pt-28 pb-20 sm:pt-36 sm:pb-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <SectionHeading title="Education & Opportunities" />
+
+    <div class="relative">
+      <span class="absolute bottom-4 left-[11px] top-4 w-px bg-line" aria-hidden="true"></span>
+
+      {experience.map((item, index) => (
+        <Reveal
+          delay={index * 80}
+          class="relative pb-10 pl-10 last:pb-0 sm:grid sm:grid-cols-[200px_1fr] sm:gap-8"
+        >
+          <span
+            class="absolute left-[3.5px] top-1.5 h-4 w-4 rounded-full border-2 border-accent bg-bg shadow-[0_0_0_5px_var(--accent-soft)]"
+            aria-hidden="true"
+          ></span>
+
+          <div>
+            <p class="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-accent">{item.status}</p>
+            <p class="mt-1 font-mono text-[11px] text-muted">{item.period}</p>
+          </div>
+
+          <div class="mt-4 sm:mt-0">
+            <h3 class="text-base font-semibold tracking-tight">
+              {item.role} <span class="font-normal text-muted">· {item.org}</span>
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-muted">{item.detail}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

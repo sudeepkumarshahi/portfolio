@@ -1,0 +1,82 @@
+---
+import { profile } from '../data/site';
+---
+
+<section class="relative overflow-hidden pb-16 pt-28 sm:pb-24 sm:pt-36">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/5 blur-3xl"></div>
+  </div>
+
+  <div class="relative mx-auto grid max-w-6xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr]">
+    <div>
+      <h1
+        data-hero-item
+        style="--hero-delay:140ms"
+        class="mt-6 text-[2.75rem] font-semibold leading-[1.06] tracking-tight sm:text-6xl lg:text-[4.25rem]"
+      >
+        {profile.headline} <span class="text-accent">{profile.name}.</span>
+      </h1>
+
+      <p data-hero-item style="--hero-delay:220ms" class="mt-6 text-xl font-medium tracking-tight sm:text-2xl">
+        {profile.intro}
+      </p>
+
+      <p data-hero-item style="--hero-delay:300ms" class="mt-5 max-w-xl text-[15px] leading-7 text-muted">
+        {profile.description}
+      </p>
+
+      <div data-hero-item style="--hero-delay:380ms" class="mt-8 flex flex-wrap gap-3">
+        <a href="/skills" class="btn btn-solid inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium">
+          Skills
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="/contact" class="btn btn-ghost inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium">
+          Get in touch
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div
+        data-hero-item
+        style="--hero-delay:460ms"
+        class="mt-11 grid gap-5 border-t border-line pt-6 sm:grid-cols-3"
+      >
+        <div class="flex items-start gap-3">
+          <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_var(--accent-soft)]"></span>
+          <div>
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Now</p>
+            <p class="mt-1 text-xs font-medium">Building practical data projects</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full border border-accent"></span>
+          <div>
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Learning</p>
+            <p class="mt-1 text-xs font-medium">Deep learning &amp; RAG</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full border border-accent"></span>
+          <div>
+            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Open to</p>
+            <p class="mt-1 text-xs font-medium">Jobs, collaboration &amp; opportunity</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-hero-item style="--hero-delay:420ms" class="relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div class="photo-frame relative overflow-hidden rounded-2xl border border-line bg-surface p-2 shadow-sm">
+        <div class="overflow-hidden rounded-xl">
+          <img
+            src={profile.photo}
+            alt={`Portrait of ${profile.name}`}
+            width="1000"
+            height="1258"
+            class="photo-img h-auto w-full object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

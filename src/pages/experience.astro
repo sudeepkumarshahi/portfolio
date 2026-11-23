@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Experience from '../components/Experience.astro';
+import TypingAnimation from '../components/TypingAnimation.astro';
+import { profile } from '../data/site';
+---
+
+<BaseLayout title={`Experience — ${profile.name}`} description={`Education and opportunities for ${profile.name}.`}>
+  <Experience />
+  <TypingAnimation />
+</BaseLayout>

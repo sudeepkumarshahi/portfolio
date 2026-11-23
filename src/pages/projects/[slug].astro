@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import Reveal from '../../components/Reveal.astro';
+import { profile, projects, type Project } from '../../data/site';
+
+interface Props {
+  project: Project;
+}
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const position = projects.findIndex((item) => item.slug === project.slug);
+const next = projects[(position + 1) % projects.length];
+---
+
+<BaseLayout title={`${project.title} — ${profile.name}`} description={project.summary}>
+  <article class="pb-24 pt-32 sm:pt-40">
+    <div class="mx-auto max-w-4xl px-5 sm:px-8">
+      <a href="/projects/" class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-muted transition-colors hover:text-accent">
+        <span aria-hidden="true">←</span> All projects
+      </a>
+
+      <div class="mt-10 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+        <span class="rounded border border-line px-2.5 py-1.5">{project.category}</span>
+        <span>{project.year}</span>
+      </div>
+
+      <h1 data-hero-item style="--hero-delay:80ms" class="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+        {project.title}
+      </h1>
+      <p data-hero-item style="--hero-delay:160ms" class="mt-5 max-w-2xl text-lg leading-8 text-muted sm:text-xl">
+        {project.subtitle}
+      </p>
+
+      <div data-hero-item style="--hero-delay:240ms" class="mt-10">
+        <ProjectVisual variant={project.variant} />
+      </div>
+
+      <div data-hero-item style="--hero-delay:300ms" class="mt-8 grid gap-4 border-y border-line py-6 sm:grid-cols-2">
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Headline result</p>
+          <p class="mt-2 font-mono text-2xl font-medium text-accent">{project.metric}</p>
+          <p class="mt-1 text-xs text-muted">{project.metricLabel}</p>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">Stack</p>
+          <div class="mt-2 flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span class="rounded border border-line px-2 py-1 font-mono text-[10px] text-muted">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p data-hero-item style="--hero-delay:360ms" class="mt-8 text-[15px] leading-7 text-muted">
+        {project.summary}
+      </p>
+
+      <div class="mt-12 space-y-10">
+        {project.caseStudy.map((section, index) => (
+          <Reveal delay={index * 60}>
+            <section>
+              <h2 class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-accent">
+                {String(index + 1).padStart(2, '0')} / {section.heading}
+              </h2>
+              <p class="mt-4 max-w-2xl text-[15px] leading-7 text-muted">{section.body}</p>
+            </section>
+          </Reveal>
+        ))}
+      </div>
+
+      <div class="mt-14 flex flex-wrap gap-3">
+        <a href={project.code} target="_blank" rel="noopener noreferrer" class="btn btn-solid inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium">
+          View code <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href={project.demo} target="_blank" rel="noopener noreferrer" class="btn btn-ghost inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium">
+          Live demo <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-20 max-w-6xl px-5 sm:px-8">
+      <a href={`/projects/${next.slug}`} class="group flex items-center justify-between border-t border-line pt-8">
+        <span>
+          <span class="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted">Next project</span>
+          <span class="mt-2 block text-xl font-semibold tracking-tight transition-colors group-hover:text-accent sm:text-2xl">
+            {next.title}
+          </span>
+        </span>
+        <span class="text-2xl text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </article>
+</BaseLayout>

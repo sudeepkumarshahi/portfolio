@@ -1,0 +1,48 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Reveal from './Reveal.astro';
+import { profile } from '../data/site';
+---
+
+<section class="pt-28 pb-20 sm:pt-36 sm:pb-28">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <SectionHeading title="About Me" />
+
+    <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+      <Reveal>
+        <div class="space-y-5 text-[15px] leading-7 text-muted">
+          <p>
+            A Data Science undergraduate at the <a href={profile.university} target="_blank" rel="noopener noreferrer" class="font-medium text-ink underline decoration-accent/50 underline-offset-4 transition-colors hover:text-accent">School of Mathematical Sciences (SMS), Tribhuvan University</a>, with a background in machine learning, programming, and data analysis. Proficient in C, Python, and R, with experience using libraries such as Pandas, NumPy, and Scikit-learn.
+          </p>
+          <p>
+            Exploring areas of artificial intelligence and deep learning, with knowledge of PyTorch, LangChain, FastAPI, SQL, web scraping, and system design. Focused on developing practical projects, strengthening technical skills, and applying data-driven approaches to real-world problems.
+          </p>
+        </div>
+        <a href="/contact" class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-accent">
+          Let's connect
+          <span aria-hidden="true">↗</span>
+        </a>
+      </Reveal>
+
+      <Reveal delay={120}>
+        <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">At a glance</p>
+          <div class="mt-6 space-y-6">
+            <div class="border-l-2 border-accent pl-5">
+              <p class="text-sm font-semibold">BSc Data Science</p>
+              <p class="mt-1 text-xs text-muted">SMS, Tribhuvan University · Balkhu</p>
+            </div>
+            <div class="border-l-2 border-line pl-5">
+              <p class="text-sm font-semibold">Open to connect</p>
+              <p class="mt-1 text-xs text-muted">Looking for opportunities to work with real data</p>
+            </div>
+            <div class="border-l-2 border-line pl-5">
+              <p class="text-sm font-semibold">Currently exploring</p>
+              <p class="mt-1 text-xs text-muted">AI, deep learning, and backend development</p>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

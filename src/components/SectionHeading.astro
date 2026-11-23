@@ -1,0 +1,23 @@
+---
+interface Props {
+  title: string;
+  note?: string;
+}
+
+const { title, note } = Astro.props;
+---
+
+<div class="heading-block group mb-10 sm:mb-14" data-reveal>
+  <div class="flex items-center gap-4 sm:gap-5">
+    <span class="heading-mark" aria-hidden="true"></span>
+    <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+      <span class="heading-mask"><span class="heading-inner">{title}</span></span>
+    </h2>
+  </div>
+
+  <div class="heading-rule mt-5" aria-hidden="true">
+    <span class="heading-rule-fill"></span>
+  </div>
+
+  {note && <p class="mt-4 max-w-md text-sm leading-relaxed text-muted">{note}</p>}
+</div>

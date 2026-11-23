@@ -1,0 +1,136 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import { profile } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${profile.name} — ${profile.role}`, description = profile.intro } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com').href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#c2410c" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        const saved = localStorage.getItem('theme');
+        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    </script>
+    <ClientRouter />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+    >
+      Skip to content
+    </a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+
+    <script>
+      function initReveal() {
+        const items = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)');
+        if (!items.length) return;
+        if (!('IntersectionObserver' in window)) {
+          items.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        items.forEach((el) => observer.observe(el));
+      }
+
+      function initNav() {
+        const toggle = document.getElementById('nav-toggle');
+        const menu = document.getElementById('mobile-menu');
+        if (toggle && menu) {
+          const close = () => {
+            menu.classList.add('hidden');
+            toggle.setAttribute('aria-expanded', 'false');
+          };
+          toggle.addEventListener('click', () => {
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+              close();
+            } else {
+              menu.classList.remove('hidden');
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+          });
+          menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+        }
+      }
+
+      function applyTheme() {
+        let saved = null;
+        try {
+          saved = localStorage.getItem('theme');
+        } catch (error) {
+          void error;
+        }
+        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+      }
+
+      document.addEventListener('astro:after-swap', applyTheme);
+      applyTheme();
+
+      function initTheme() {
+        const button = document.getElementById('theme-toggle');
+        if (!button) return;
+        const isDark = document.documentElement.dataset.theme === 'dark';
+        button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        button.addEventListener('click', () => {
+          const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          button.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+          try {
+            localStorage.setItem('theme', next);
+          } catch (error) {
+            void error;
+          }
+        });
+      }
+
+      function init() {
+        initReveal();
+        initNav();
+        initTheme();
+      }
+
+      document.addEventListener('astro:page-load', init);
+    </script>
+  </body>
+</html>

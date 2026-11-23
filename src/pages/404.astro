@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/site';
+---
+
+<BaseLayout title={`Page not found — ${profile.name}`}>
+  <section class="mx-auto flex min-h-[70vh] max-w-6xl flex-col items-start justify-center px-5 py-24 sm:px-8">
+    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">404 / Not found</p>
+    <h1 class="mt-6 text-5xl font-semibold tracking-tight sm:text-7xl">This page went missing.</h1>
+    <p class="mt-5 max-w-lg text-[15px] leading-7 text-muted">
+      The link may be old, or the page may have moved. The homepage is a good place to start again.
+    </p>
+    <a href="/" class="btn btn-solid mt-8 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium">
+      Back home <span class="arrow" aria-hidden="true">↗</span>
+    </a>
+  </section>
+</BaseLayout>
